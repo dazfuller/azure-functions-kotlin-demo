@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
+    "StorageConnectionString": "UseDevelopmentStorage=true",
+    "TableName": "messages",
+    "FUNCTIONS_WORKER_RUNTIME": "java"
+  }
+}
