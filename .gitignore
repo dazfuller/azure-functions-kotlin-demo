@@ -67,3 +67,4 @@ fabric.properties
 
 target/
 obj/
+local.settings.json
