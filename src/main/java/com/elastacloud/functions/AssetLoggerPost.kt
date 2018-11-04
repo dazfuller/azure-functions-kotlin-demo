@@ -14,10 +14,14 @@ class AssetLoggerPost {
         val logger = executionContext.logger
         logger.info("Recording logging message")
 
+        // Get the entity from the request
         val entity = LogDataEntity(request.body)
+
+        // Get the storage connection details
         val connectionString = System.getenv("StorageConnectionString")
         val tableName = System.getenv("TableName")
 
+        // Save the data
         val tableClient = TableClient(connectionString, tableName)
         tableClient.saveLogMessage(entity)
 
