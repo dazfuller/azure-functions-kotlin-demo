@@ -54,7 +54,12 @@
             <artifactId>azure-storage</artifactId>
             <version>8.0.0</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.1</version>
+        </dependency>
 
         <!-- Test -->
         <dependency>
@@ -74,7 +79,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test</artifactId>
+            <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
@@ -120,7 +125,7 @@
                         </property>
                         <property>
                             <name>StorageConnectionString</name>
-                            <value></value>
+                            <value>NOT SET</value>
                         </property>
                         <property>
                             <name>TableName</name>

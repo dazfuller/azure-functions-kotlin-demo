@@ -4,6 +4,6 @@ class LogData(
     val assetId: String = "",
     val messageId: String = "",
     val message: String? = null,
-    val timestamp: String = ""
+    val loggedDate: String = ""
 )
 

@@ -1,11 +1,12 @@
 package com.elastacloud.functions
 
 import com.microsoft.azure.storage.table.TableServiceEntity
-import java.time.Instant
+import org.joda.time.DateTime
+import java.util.Date
 
 class LogDataEntity constructor() : TableServiceEntity() {
     var message: String = ""
-    var timestamp: Instant = Instant.EPOCH
+    var loggedDate: Date = DateTime.parse("1970-01-01").toDate()
 
     constructor(assetId: String, messageId: String) : this() {
         this.partitionKey = assetId
@@ -14,6 +15,7 @@ class LogDataEntity constructor() : TableServiceEntity() {
 
     constructor(source: LogData) : this(source.assetId, source.messageId) {
         message = source.message ?: ""
-        timestamp = Instant.parse(source.timestamp)
+        loggedDate = DateTime.parse(source.loggedDate).toDate()
     }
 }
+

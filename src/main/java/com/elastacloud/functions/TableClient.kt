@@ -38,7 +38,7 @@ class TableClient(connectionString: String, private val tableName: String) {
                 it.partitionKey,
                 it.rowKey,
                 it.message,
-                it.timestamp.toString())
+                it.loggedDate.toString())
         }
     }
 
