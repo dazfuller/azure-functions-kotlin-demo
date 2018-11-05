@@ -5,6 +5,7 @@ import com.microsoft.azure.storage.table.CloudTable
 import com.microsoft.azure.storage.table.CloudTableClient
 import com.microsoft.azure.storage.table.TableOperation
 import com.microsoft.azure.storage.table.TableQuery
+import org.joda.time.DateTime
 
 class TableClient(connectionString: String, private val tableName: String) {
     private val client: CloudTableClient
@@ -38,7 +39,7 @@ class TableClient(connectionString: String, private val tableName: String) {
                 it.partitionKey,
                 it.rowKey,
                 it.message,
-                it.loggedDate.toString())
+                DateTime(it.loggedDate).toString())
         }
     }
 
