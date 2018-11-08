@@ -6,7 +6,7 @@ import java.util.Date
 
 class LogDataEntity constructor() : TableServiceEntity() {
     var message: String = ""
-    var loggedDate: Date = DateTime.parse("1970-01-01").toDate()
+    var loggedDate: Date = DateTime.parse("1970-01-01T00:00:00.000Z").toDate()
 
     constructor(assetId: String, messageId: String) : this() {
         this.partitionKey = assetId
