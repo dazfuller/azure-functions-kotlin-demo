@@ -1,7 +1,6 @@
 package com.elastacloud.functions
 
 import org.joda.time.DateTime
-import java.lang.IllegalArgumentException
 import java.util.*
 import kotlin.test.*
 
@@ -35,29 +34,22 @@ class LogDataEntityTest {
 
     @Test
     fun `Creation from valid LogData entity`() {
-        val sourceDate = "2018-09-13T17:12:13.000Z"
+        val sourceDate = DateTime.parse("2018-09-13T17:12:13.000Z").toDate()
         val sourceEntity = LogData("001001", "1234", "Test message", sourceDate)
         val entity = LogDataEntity(sourceEntity)
 
         assertEquals("001001", entity.partitionKey)
         assertEquals("1234", entity.rowKey)
-        assertEquals(parseDate(sourceDate), entity.loggedDate)
+        assertEquals(sourceDate, entity.loggedDate)
         assertTrue { entity.message.isNotBlank() }
         assertEquals(sourceEntity.message, entity.message)
     }
 
     @Test
     fun `Creation with null message defaults to empty string`() {
-        val sourceEntity = LogData("001001", "1234", null, "2018-01-01")
+        val sourceEntity = LogData("001001", "1234", null, DateTime.parse("2018-01-01").toDate())
         val entity = LogDataEntity(sourceEntity)
 
         assertTrue { entity.message.isEmpty() }
-    }
-
-    @Test
-    fun `Creation with invalid date throws`() {
-        val sourceEntity = LogData("001001", "1234", "Test message", "INVALID")
-
-        assertFailsWith<IllegalArgumentException> { LogDataEntity(sourceEntity) }
     }
 }

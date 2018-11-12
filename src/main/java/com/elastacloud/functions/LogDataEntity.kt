@@ -15,7 +15,7 @@ class LogDataEntity constructor() : TableServiceEntity() {
 
     constructor(source: LogData) : this(source.assetId, source.messageId) {
         message = source.message ?: ""
-        loggedDate = DateTime.parse(source.loggedDate).toDate()
+        loggedDate = source.loggedDate
     }
 }
 
