@@ -34,7 +34,7 @@ class LogDataEntityTest {
 
     @Test
     fun `Creation from valid LogData entity`() {
-        val sourceDate = DateTime.parse("2018-09-13T17:12:13.000Z").toDate()
+        val sourceDate = parseDate("2018-09-13T17:12:13.000Z")
         val sourceEntity = LogData("001001", "1234", "Test message", sourceDate)
         val entity = LogDataEntity(sourceEntity)
 
@@ -47,7 +47,7 @@ class LogDataEntityTest {
 
     @Test
     fun `Creation with null message defaults to empty string`() {
-        val sourceEntity = LogData("001001", "1234", null, DateTime.parse("2018-01-01").toDate())
+        val sourceEntity = LogData("001001", "1234", null, parseDate("2018-01-01"))
         val entity = LogDataEntity(sourceEntity)
 
         assertTrue { entity.message.isEmpty() }
