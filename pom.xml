@@ -20,7 +20,7 @@
         <functionAppRegion>northeurope</functionAppRegion>
         <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
         <functionResourceGroup>kotlin-demo-rg</functionResourceGroup>
-        <kotlin.version>1.3.0</kotlin.version>
+        <kotlin.version>1.3.10</kotlin.version>
     </properties>
 
     <dependencyManagement>
