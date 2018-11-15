@@ -5,7 +5,6 @@ import com.microsoft.azure.storage.table.CloudTable
 import com.microsoft.azure.storage.table.CloudTableClient
 import com.microsoft.azure.storage.table.TableOperation
 import com.microsoft.azure.storage.table.TableQuery
-import org.joda.time.DateTime
 
 class TableClient(connectionString: String, private val tableName: String) {
     private val client: CloudTableClient
