@@ -4,13 +4,14 @@ import com.microsoft.azure.functions.*
 import com.microsoft.azure.functions.annotation.AuthorizationLevel
 import com.microsoft.azure.functions.annotation.FunctionName
 import com.microsoft.azure.functions.annotation.HttpTrigger
+import kotlinx.coroutines.runBlocking
 
 class AssetLoggerGet {
     @FunctionName("AssetLoggerGet")
     fun run(
             @HttpTrigger(name = "request", methods = [HttpMethod.GET], authLevel = AuthorizationLevel.FUNCTION, route = "asset/data")
             request: HttpRequestMessage<String?>,
-            executionContext: ExecutionContext): HttpResponseMessage {
+            executionContext: ExecutionContext) = runBlocking<HttpResponseMessage> {
         val logger = executionContext.logger
         logger.info("Retrieving logging message")
 
@@ -20,7 +21,7 @@ class AssetLoggerGet {
         // If no asset Id is provided then return an error
         if (assetId.isBlank()) {
             logger.warning("Asset id not specified")
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+            return@runBlocking request.createResponseBuilder(HttpStatus.BAD_REQUEST)
                     .body("No asset id specified in the URL query parameter")
                     .build()
         }
@@ -31,16 +32,16 @@ class AssetLoggerGet {
 
         // Query the store for asset messages
         val tableClient = TableClient(connectionString, tableName)
-        val logEntries = tableClient.getAssetLogs(assetId)
+        val logEntries = tableClient.getAssetLogs(assetId).await()
 
         // If no messages were found then return a 404 error response
         if (!logEntries.any()) {
-            return request.createResponseBuilder(HttpStatus.NOT_FOUND)
+            return@runBlocking request.createResponseBuilder(HttpStatus.NOT_FOUND)
                     .body("No data found for asset $assetId")
                     .build()
         }
 
-        return request.createResponseBuilder(HttpStatus.OK)
+        return@runBlocking request.createResponseBuilder(HttpStatus.OK)
                 .header("Content-Type", "application/json")
                 .body(logEntries)
                 .build()

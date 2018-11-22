@@ -4,13 +4,14 @@ import com.microsoft.azure.functions.*
 import com.microsoft.azure.functions.annotation.AuthorizationLevel
 import com.microsoft.azure.functions.annotation.FunctionName
 import com.microsoft.azure.functions.annotation.HttpTrigger
+import kotlinx.coroutines.runBlocking
 
 class AssetLoggerPost {
     @FunctionName("AssetLoggerPost")
     fun run(
             @HttpTrigger(name = "request", methods = [HttpMethod.POST], authLevel = AuthorizationLevel.FUNCTION, route = "asset/data")
             request: HttpRequestMessage<LogData>,
-            executionContext: ExecutionContext): HttpResponseMessage {
+            executionContext: ExecutionContext) = runBlocking<HttpResponseMessage> {
         val logger = executionContext.logger
         logger.info("Recording logging message")
 
@@ -23,9 +24,9 @@ class AssetLoggerPost {
 
         // Save the data
         val tableClient = TableClient(connectionString, tableName)
-        tableClient.saveLogMessage(entity)
+        tableClient.saveLogMessage(entity).await()
 
-        return request.createResponseBuilder(HttpStatus.OK)
+        return@runBlocking request.createResponseBuilder(HttpStatus.OK)
                 .build()
     }
 }
